@@ -36,7 +36,5 @@ module.exports = (sequelize, DataTypes) => {
     })
   }
 
-  // Image.sync({ force: false })
-
   return Image;
 };

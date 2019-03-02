@@ -1,4 +1,5 @@
 const adventureController = require('../controllers').Adventure;
+const calendarController = require('../controllers').Calendar;
 const locationController = require('../controllers').Location;
 const imageController = require('../controllers').Image;
 
@@ -14,6 +15,11 @@ module.exports = (app) => {
   app.get('/api/adventure/location', adventureController.location);
   app.get('/api/adventure/:id', adventureController.get);
   
+  app.post('/api/upload/', adventureController.uploadHandler);
+
+  // Dates
+  app.get('/api/dates', calendarController.list)
+
   // Location (map)
   app.get('/api/location', locationController.list)
   

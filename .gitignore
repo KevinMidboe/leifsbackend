@@ -1,3 +1,7 @@
+#  --- MacOS ignore ---
+.DS_Store
+
+
 #  --- Javascript ignore ---
 
 node_modules

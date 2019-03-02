@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       notNull: true
     },
     subtext: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       notNull: false,
       default: null
     },

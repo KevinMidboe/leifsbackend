@@ -27,29 +27,6 @@ fs
     db[model.name] = model;
   });
 
-// const AdventureModel = require('./adventure')
-
-// db.adventure = require('./adventure.js')(sequelize, Sequelize);
-// db.image = require('./image.js')(sequelize, Sequelize);
-// db.imagevariation = require('./imagevariation.js')(sequelize, Sequelize);
-// db.location = require('./location.js')(sequelize, Sequelize);
-
-// db.location.sync({ force: false });
-// db.adventure.sync({ force: false });
-// db.image.sync({ force: false });
-// db.imagevariation.sync({ force: false });
-
-
-// Object.keys(db).forEach(modelName => {
-//   console.log('modelName', modelName)
-//   if (db[modelName].associate) {
-//     console.log(`yes ${modelName} has an assocination`)
-//     console.log(db[modelName])
-//     console.log(db)
-//     db[modelName].associate(db);
-//   }
-// });
-
 db.sequelize = sequelize;
 
 module.exports = db;

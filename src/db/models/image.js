@@ -12,15 +12,6 @@ module.exports = (sequelize, DataTypes) => {
     adventure_id: {
       type: DataTypes.INTEGER,
     },
-    // adventure_key: {
-    //   type: DataTypes.INTEGER,
-    //   allowNull: false,
-    //   references: {
-    //     model: 'adventures',
-    //     key: 'id',
-    //     as: 'adventureKey'
-    //   }
-    // },
     description: {
       type: DataTypes.TEXT,
       allowNull: true

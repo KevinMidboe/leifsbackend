@@ -2,11 +2,7 @@ const Adventure = require('../db/models').adventure;
 const Location = require('../db/models').location;
 const Image = require('../db/models').image;
 
-// const { Adventure, Image, Location } = require('../db/sequelize')
-
 const Op = require('sequelize').Op;
-
-// module.exports = {
 
 function location(req, res) {
   return Adventure
@@ -15,7 +11,6 @@ function location(req, res) {
         'locationName': req.query.name
       },
       attributes: ['id', 'title', 'subtext', 'dateStart', 'dateEnd', 'locationName']
-      // order: [['title', 'ASC']]
     })
     .then(adventure => res.status(200).send(adventure))
     .catch(error => res.status(400).send(error))
@@ -24,7 +19,10 @@ function location(req, res) {
 function list(req, res) {
   return Adventure
     .findAll({
-      attributes: ['id', 'title', 'subtext', 'dateStart', 'dateEnd', 'locationName']
+      attributes: ['id', 'title', 'subtext', 'dateStart', 'dateEnd', 'locationName'],
+      order: [
+        ['dateStart', 'DESC'],
+      ]
     })
     .then(adventure => res.status(200).send(adventure))
     .catch(error => res.status(400).send(error))
@@ -40,28 +38,41 @@ function get(req, res) {
 }
 
 function createLocation(req, res) {
+  const geoposition = `${req.body.geoposition[0]}, ${req.body.geoposition[1]}`
+  console.log('creatingLocation', geoposition)
+
   return Location
     .create({
       name: req.body.locationName,
-      geoposition: req.body.geoposition
+      geoposition: geoposition,
+      mapboxData: req.body.mapboxData
     })
+    .catch((err) => console.error(err))
+}
+
+function uploadHandler(req, res) {
+  console.log('req', req.files)
+  return res.status(200).send('upload successful')
 }
 
 // get form elements
 function create(req, res) {
-  console.log('adventure', Adventure)
-  return createLocation(req, res)
-    .then(() => Adventure
-    .create({
-      title: req.body.title,
-      subtext: req.body.subtext,
-      dateStart: req.body.dateStart,
-      dateEnd: req.body.dateEnd,
-      locationName: req.body.locationName,
-    }, {}))
-    .then(adventure => res.status(201).send(adventure))
-    .catch(error => res.status(400).send(error))
+  console.log('Received req body for create:', req.body)
+
+  Adventure.create({
+    title: req.body.title,
+    subtext: req.body.subtext,
+    dateStart: req.body.dateStart,
+    dateEnd: req.body.dateEnd,
+    locationName: req.body.locationName,
+  }, {})
+  .then(() => createLocation(req, res))
+  .then(adventure => res.status(201).send(adventure))
+  .catch(error => {
+    console.log('Error when adding adventure', error)
+    res.status(400).send('Something went wrong')
+  })
 }
 
 
-module.exports = { location, list, get, create };
+module.exports = { location, list, get, create, uploadHandler };

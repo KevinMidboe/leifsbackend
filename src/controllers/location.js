@@ -5,18 +5,30 @@ const Adventure = require('../db/models').adventure;
 
 const Op = require('sequelize').Op;
 
-module.exports = {
+function list(req, res) {
+  const name = req.query.name;
+  console.log('param name:', name)
 
-  list(req, res) {
-    return Location
-      .findAll({
-        attributes: ['name', 'geoposition', 'mapboxData']
-      })
-      // .then(Location => Adventure.findAll({
-      //   where: { 'locationName': Location.name },
-      //   attributes: [ 'title', 'subtext', 'dateStart', 'dateEnd', 'location.geoposition' ]
-      // }))
-      .then(Location => res.status(200).send(Location))
-      .catch(error => res.status(400).send(error))
-  },
-};
+  if (name) {
+    return getByName(req, res, name)
+  }
+
+  return Location
+    .findAll({
+      attributes: ['name', 'geoposition', 'mapboxData']
+    })
+    .then(Location => res.status(200).send(Location))
+    .catch(error => res.status(400).send(error))
+}
+
+function getByName(req, res, name) {
+  return Location
+    .findOne({
+      where: { name },
+      attributes: ['name', 'geoposition', 'mapboxData']
+    })
+    .then(Location => res.status(200).send(Location))
+    .catch(error => res.status(400).send(error))
+}
+
+module.exports = { list };

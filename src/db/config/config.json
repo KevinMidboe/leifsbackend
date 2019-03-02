@@ -2,7 +2,7 @@
   "development": {
     "username": "kevinmidboe",
     "password": null,
-    "database": "postgres",
+    "database": "leifsopplevelser",
     "host": "localhost",
     "port": 5432,
     "dialect": "postgres",

@@ -3,47 +3,48 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert('images', [{
-      filename: 'DSC_9029.png',
+      filename: '686f90d2dae64d979d5c2df0a866d286.jpg',
       adventure_id: 1,
-      size: 2983546,
+      // size: 2983546,
+      album_order: 0,
+      variations: '{"sizes":["thumb","sm","md","lg"]}',
+      folder: '/Users/kevinmidboe/python/leifs-image-processor/assets',
       createdAt: new Date(),
       updatedAt: new Date()
     },
     {
-      filename: 'DSC_0505.png',
+      filename: '41baeb62842d4b99a71ba6cdabf09e7c.jpg',
       adventure_id: 1,
       description: 'Dancing around the christmas tree',
-      size: 10032272,
+      // size: 10032272,
       album_order: 1,
+      variations: '{"sizes":["thumb","sm","md","lg"]}',
+      folder: '/Users/kevinmidboe/python/leifs-image-processor/assets',
       createdAt: new Date(),
       updatedAt: new Date()
     },
     {
-      filename: 'DSC_0509.png',
+      filename: '5de304186ef4439e814c5eca3fe03a4c.jpg',
       adventure_id: 2,
       description: 'Se på den fisken der!',
-      size: 8032272,
-      album_order: 2,
+      // size: 8032272,
+      album_order: 1,
+      variations: '{"sizes":["thumb","sm","md","lg"]}',
+      folder: '/Users/kevinmidboe/python/leifs-image-processor/assets',
       createdAt: new Date(),
       updatedAt: new Date()
     },
     {
-      filename: 'DSC_0510.png',
+      filename: '42531f99132e414a81d6d21d97e77082.jpg',
       adventure_id: 2,
       description: 'Noe i garnet!',
-      size: 6373234,
-      album_order: 1,
+      // size: 6373234,
+      album_order: 0,
+      variations: '{"sizes":["thumb","sm","md","lg"]}',
+      folder: '/Users/kevinmidboe/python/leifs-image-processor/assets',
       createdAt: new Date(),
       updatedAt: new Date()
     }], {})
-
-    // const adventure = await queryInterface.Sequelize.query(
-    //   `SELECT id FROM adventure;`
-    // );
-
-    // const adventure = images[0];
-
-    // return await queryInterface.bulkInsert('images')
   },
 
   down: (queryInterface, Sequelize) => { 

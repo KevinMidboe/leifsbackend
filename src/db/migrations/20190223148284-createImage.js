@@ -20,13 +20,21 @@ module.exports = {
           type: Sequelize.TEXT,
           allowNull: true
         },
-        size: {
-          type: Sequelize.DOUBLE,
+        variations: {
+          type: Sequelize.JSON,
           allowNull: true
         },
         album_order: {
           type: Sequelize.INTEGER,
           allowNull: true
+        },
+        createdAt: {
+          allowNull: false,
+          type: Sequelize.DATE
+        },
+        updatedAt: {
+          allowNull: false,
+          type: Sequelize.DATE
         }
       }
     )

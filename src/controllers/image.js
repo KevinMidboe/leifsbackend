@@ -1,6 +1,6 @@
 const Image = require('../db/models').image;
 
-// const { Image } = require('../db/sequelize')
+const path = require("path");
 
 module.exports = {
 
@@ -15,9 +15,62 @@ module.exports = {
   list(req, res) {
     return Image
       .findAll({
-        where: { 'adventure_id': req.params.adventureId }
+        where: { 'adventure_id': req.params.adventureId },
+        order: [
+          ['album_order', 'ASC'],
+        ]
       })
       .then(images => res.status(200).send(images))
       .catch(error => res.status(400).send(error))
   },
+
+  delete(req, res) {
+    const filename = req.query.filename;
+
+    return Image.findOne({
+      where: { filename }
+    })
+    .then(file => path.join(file.folder, file.filename))
+    .catch(err => res.status(404).send('Image does not exist'))
+    .then(filepath => {
+      console.log('filePath', filepath)
+
+      return Image.destroy({
+        where: { filename }
+      })
+    })
+    .then(resp => res.status(200).send('Successfully removed image'))
+    .catch(err => console.log('Image not removed, error occured', err))
+  },
+
+  uploadHandler(proxyRes, req, res) {
+    console.log('landed proxyRes')
+    console.log('req id', req.params.id)
+
+    var body = new Buffer.from('');
+    proxyRes.on('data', function (data) {
+        body = Buffer.concat([body, data]);
+    });
+    proxyRes.on('end', function () {
+        body = JSON.parse(body);
+        console.log("res from proxied server:", body);
+        let { uploaded } = body;
+
+        uploaded.forEach((file, index) => {
+          console.log('saving file', file)
+
+          Image.create({
+            filename: file.filename,
+            adventure_id: req.params.id,
+            variations: { sizes: file.variations },
+            album_order: index,
+            folder: file.folder
+          })
+          .catch((err) => console.error(err))
+        })
+
+
+        res.end("my response to cli");
+    });
+  }
 };

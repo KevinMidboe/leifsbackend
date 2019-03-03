@@ -16,13 +16,17 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT,
       allowNull: true
     },
-    size: {
-      type: DataTypes.DOUBLE,
+    variations: {
+      type: DataTypes.JSON,
       allowNull: true
     },
     album_order: {
       type: DataTypes.INTEGER,
       allowNull: true
+    },
+    folder: {
+      type: DataTypes.TEXT,
+      allowNull: false
     }
   }, {});
 

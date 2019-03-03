@@ -1,7 +1,17 @@
-const adventureController = require('../controllers').Adventure;
-const calendarController = require('../controllers').Calendar;
-const locationController = require('../controllers').Location;
-const imageController = require('../controllers').Image;
+const adventureController = require('./controllers').Adventure;
+const calendarController = require('./controllers').Calendar;
+const locationController = require('./controllers').Location;
+const imageController = require('./controllers').Image;
+
+const proxy = require('http-proxy-middleware')
+
+const proxyOptions = {
+  target: 'http://localhost:5001',
+  changeOrigin: false,
+  onProxyReq: imageController.uploadRequest,
+  onProxyRes: imageController.uploadHandler
+}
+var uploadProxy = proxy(proxyOptions);
 
 module.exports = (app) => {
   app.get('/api', (req, res) => res.status(200).send({
@@ -14,8 +24,6 @@ module.exports = (app) => {
   
   app.get('/api/adventure/location', adventureController.location);
   app.get('/api/adventure/:id', adventureController.get);
-  
-  app.post('/api/upload/', adventureController.uploadHandler);
 
   // Dates
   app.get('/api/dates', calendarController.list)
@@ -26,4 +34,7 @@ module.exports = (app) => {
   // images
   app.get('/api/images', imageController.all)
   app.get('/api/images/:adventureId', imageController.list)
+  
+  app.post('/api/upload/:id', uploadProxy)
+  app.delete('/api/images/', imageController.delete)
 }

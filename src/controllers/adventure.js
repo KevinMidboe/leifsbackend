@@ -50,11 +50,6 @@ function createLocation(req, res) {
     .catch((err) => console.error(err))
 }
 
-function uploadHandler(req, res) {
-  console.log('req', req.files)
-  return res.status(200).send('upload successful')
-}
-
 // get form elements
 function create(req, res) {
   console.log('Received req body for create:', req.body)
@@ -75,4 +70,4 @@ function create(req, res) {
 }
 
 
-module.exports = { location, list, get, create, uploadHandler };
+module.exports = { location, list, get, create };

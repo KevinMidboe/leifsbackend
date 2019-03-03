@@ -43,6 +43,10 @@ module.exports = {
     .catch(err => console.log('Image not removed, error occured', err))
   },
 
+  uploadRequest(proxyReq, req, res) {
+    console.log('landed proxyReq')
+  },
+
   uploadHandler(proxyRes, req, res) {
     console.log('landed proxyRes')
     console.log('req id', req.params.id)

@@ -21,7 +21,7 @@ function list(req, res) {
     .findAll({
       attributes: ['id', 'title', 'subtext', 'dateStart', 'dateEnd', 'locationName'],
       order: [
-        ['dateStart', 'DESC'],
+        ['dateStart', 'ASC'],
       ]
     })
     .then(adventure => res.status(200).send(adventure))

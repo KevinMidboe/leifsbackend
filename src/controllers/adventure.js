@@ -3,6 +3,8 @@ const Location = require('../db/models').location;
 const Image = require('../db/models').image;
 
 const Op = require('sequelize').Op;
+const moment = require('moment');
+const SORT_OPTIONS = ['asc', 'desc']
 
 function location(req, res) {
   return Adventure
@@ -54,11 +56,14 @@ function createLocation(req, res) {
 function create(req, res) {
   console.log('Received req body for create:', req.body)
 
+  const dateStart = moment.utc(req.body.dateStart, 'DD-MM-YYYY');
+  const dateEnd = moment.utc(req.body.dateEnd, 'DD-MM-YYYY');
+
   Adventure.create({
     title: req.body.title,
     subtext: req.body.subtext,
-    dateStart: req.body.dateStart,
-    dateEnd: req.body.dateEnd,
+    dateStart: dateStart,
+    dateEnd: dateEnd,
     locationName: req.body.locationName,
   }, {})
   .then(() => createLocation(req, res))

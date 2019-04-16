@@ -1,6 +1,7 @@
 const Image = require('../db/models').image;
-
 const path = require("path");
+
+const SORT_OPTIONS = ['asc', 'desc']
 
 module.exports = {
 
@@ -13,11 +14,17 @@ module.exports = {
   },
 
   list(req, res) {
+    let sortOption = SORT_OPTIONS[0];
+
+    if (req.query.sort && SORT_OPTIONS.includes(req.query.sort)) {
+      sortOption = req.query.sort;
+    }
+
     return Image
       .findAll({
         where: { 'adventure_id': req.params.adventureId },
         order: [
-          ['album_order', 'ASC'],
+          ['album_order', sortOption],
         ]
       })
       .then(images => res.status(200).send(images))

@@ -19,11 +19,17 @@ function location(req, res) {
 }
 
 function list(req, res) {
+  let sortOption = SORT_OPTIONS[0];
+
+  if (req.query.sort && SORT_OPTIONS.includes(req.query.sort)) {
+    sortOption = req.query.sort;
+  }
+
   return Adventure
     .findAll({
       attributes: ['id', 'title', 'subtext', 'dateStart', 'dateEnd', 'locationName'],
       order: [
-        ['dateStart', 'ASC'],
+        ['dateStart', sortOption],
       ]
     })
     .then(adventure => res.status(200).send(adventure))
